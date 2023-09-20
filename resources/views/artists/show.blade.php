@@ -21,7 +21,7 @@
                     <tr>
                         <td>{!! $artist->bandleden !!}</td>
                         <td>{!! $artist->genre !!}</td>
-                        <td>{!! $artist->platenmaatschappij !!}</td>
+                        <td>{!! ucfirst($artist->platenmaatschappij->platenmaatschappij) !!}</td>
                     </tr>
                     </thead>
                 </table>
@@ -30,28 +30,20 @@
                 <div class="col-2">
                     <a href="/artist/{{ $artist->id }}/edit" class="btn btn-block btn-outline-secondary col-12">Edit artist</a>
                 </div>
+
                 <div class="col-2 gx-0">
                     <form id="delete-frm" class="" action="{{ route('artist.destroy', ['artist' => $artist->id]) }}" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button class="float-end btn btn-outline-danger col-12">Delete artist</button>
+                        <button onclick="return confirm('Are you sure?')" class="float-end btn btn-outline-danger col-12">Delete record label</button>
+
+
                     </form>
                 </div>
-                {{--                <button type="button" class="col-6 btn btn-primary btn-md btn-block">Block level button</button>--}}
-
             </div>
-            <div class="">
-                {{--                    <a href="/artist/{{ $artist->id }}/edit" class="btn .btn-block btn-secondary">Edit artist</a>--}}
-
-            </div>
-            <div class="col">
-                </div>
-
-            </div>
-
-
         </div>
     </div>
 
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 @endsection
-<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+

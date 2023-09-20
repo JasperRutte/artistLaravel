@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('artists', function (Blueprint $table) {
-            $table->id(); // This will create an auto-incrementing 'id' column.
+            $table->id();
             $table->text('naam');
             $table->text('bandleden');
             $table->text('genre');
-            $table->text('platenmaatschappij');
-            $table->timestamps(); // This will add 'created_at' and 'updated_at' columns.
+            $table->unsignedBigInteger('platenmaatschappij_id');
+            $table->timestamps();
+            $table->foreign('platenmaatschappij_id')->references('id')->on('platenmaatschappij');
         });
     }
 

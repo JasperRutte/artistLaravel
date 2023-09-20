@@ -8,12 +8,10 @@
 
     <div class="container">
         <div class="row">
-{{--            <div class="col-12 pt-2">--}}
-{{--                <a href="/artists/{{ $artist->id }}" class="btn btn-primary btn-md">Go back</a>--}}
-{{--            </div>--}}
                 <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
                     <h1 class="display-4">Edit</h1>
-                    @if ($errors->any())
+
+                    @if ($errors->any())  {{-- Checks for empty textfields, radiobuttons and dropboxes --}}
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -29,6 +27,7 @@
                         @method('PUT')
 
                         <div class="row">
+
                             <div class="control-group col-12">
                                 <label for="naam">Bandnaam/artisten naam</label>
                                 <input type="text" id="naam" class="form-control" name="naam"
@@ -43,12 +42,13 @@
 
                             <div class="control-group col-12 mt-2">
                                 <label for="platenmaatschappij">Platenmaatschappij</label>
-                                <select name="platenmaatschappij" id="platenmaatschappij" class="form-control">
+                                <select name="platenmaatschappij_id" id="platenmaatschappij" class="form-control">
                                     <optgroup label="platenmaatschappij">
-                                        <option value="other" {{ $artist->platenmaatschappij === 'other' ? 'selected' : '' }}>Other</option>
-                                        <option value="universal" {{ $artist->platenmaatschappij === 'universal' ? 'selected' : '' }}>Universal</option>
-                                        <option value="warner" {{ $artist->platenmaatschappij === 'warner' ? 'selected' : '' }}>Warner</option>
-                                        <option value="sony" {{ $artist->platenmaatschappij === 'sony' ? 'selected' : '' }}>Sony</option>
+                                        @forelse($platenmaatschappij as $platenmaatschappij) {{-- loop through all the platenmaatschappijen and make a label out of them --}}
+                                            <option value="{{ $platenmaatschappij->id }}" {{ $artist->platenmaatschappij_id == $platenmaatschappij->id ? 'selected' : '' }}>{{ ucfirst($platenmaatschappij->platenmaatschappij) }}</option> {{--also checks for --}}
+                                        @empty
+                                            <option value="No artists" disabled>No artists added yet...</option> {{-- if there is no platenmaatschappij, show this message --}}
+                                        @endforelse
                                     </optgroup>
                                 </select>
                             </div>
@@ -71,19 +71,16 @@
 
 
                         </div>
-                        <div class="row mt-2">
-                            <div class="control-group col-12 text-center">
+                            <div class="control-group text-center">
                                 <button id="btn-submit" class="btn btn-primary">
-                                    Update Post
+                                Update Post
                                 </button>
                             </div>
-                        </div>
                     </form>
                 </div>
 
             </div>
         </div>
-    </div>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 @endsection
 

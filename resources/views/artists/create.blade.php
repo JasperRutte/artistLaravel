@@ -3,14 +3,17 @@
 <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 @section('content')
 
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mx-5 mb-10 h1"><a href="/artists/" class="btn btn-primary"><- Go Back</a></span>
+    </nav>
+
     <div class="container">
-        <a href="/artists" class="btn btn-primary btn-sm">Go Back</a>
         <div class="row">
             <div class="col-12 pt-2">
                 <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
                     <h1 class="display-4">Add a new artist</h1>
 
-                    @if ($errors->any())
+                    @if ($errors->any()) {{-- Checks for empty textfields, radiobuttons and dropboxes --}}
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -19,7 +22,6 @@
                             </ul>
                         </div>
                     @endif
-
                     <hr>
 
                     <form action="" method="POST">
@@ -31,22 +33,26 @@
                             </div><br>
 
                             <div>
-                            <label for="platenmaatschappij">Platenmaatschappij</label>
-                            <select name="platenmaatschappij" id="platenmaatschappij">
-                                <optgroup label="platenmaatschappij">
-                                    <option value="other" {{ "other" === old('platenmaatschappij') ? 'selected' : '' }}>Other</option>
-                                    <option value="universal" {{ "universal" === old('platenmaatschappij') ? 'selected' : '' }}>Universal</option>
-                                    <option value="warner" {{ "warner" === old('platenmaatschappij') ? 'selected' : '' }}>Warner</option>
-                                    <option value="sony" {{ "sony" === old('platenmaatschappij') ? 'selected' : '' }}>Sony</option>
-
-                                </optgroup>
-                            </select>
-                        </div><br>
+                                <tbody>
+                                    <label for="platenmaatschappij">Platenmaatschappij</label>
+                                    <select name="platenmaatschappij_id" id="platenmaatschappij">
+                                        <optgroup label="platenmaatschappij">
+                                            @forelse($platenmaatschappij as $platenmaatschappij) checks all platenmaatschappijen in platenmaatschappij
+                                                <option value="{{ $platenmaatschappij->id }}" {{ old('platenmaatschappij_id') == $platenmaatschappij->id ? 'selected' : '' }}>{{ ucfirst($platenmaatschappij->platenmaatschappij) }}</option>
+                                            @empty
+                                                <option value="No artists" disabled>No artists added yet...</option> {{--show message if there are no platenmaatschappijen added yet--}}
+                                           @endforelse
+                                        </optgroup>
+                                    </select>
+                                </tbody>
+                            </div>
+                            <br>
 
                             <div class="control-group col-12 mt-2">
                                 <label for="bandleden">Bandleden:</label>
                                 <textarea id="body" class="form-control" name="bandleden" rows="">{{ old('bandleden') }}</textarea>
-                            </div><br>
+                            </div>
+                            <br>
 
                             <div class="control-group col-12 mt-2">
                                 <label for="genre">Genre:</label><br>
@@ -64,17 +70,16 @@
                                 <label for="dnb">D'n B</label><br>
                             </div>
 
-                        <div class="row mt-2">
-                            <div class="control-group col-12 text-center">
-                                <button id="btn-submit" class="col-8 btn btn-success">
-                                    Create artist
-                                </button>
+                            <div class="row mt-2">
+                                <div class="control-group col-12 text-center">
+                                    <button id="btn-submit" class="col-8 btn btn-success">
+                                       Create artist
+                                    </button>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
