@@ -51,7 +51,7 @@ class ArtistController extends Controller
 
 
 
-    public function edit(Artist $Artist)
+    public function edit(Artist $Artist) //test
     {
         return view('artists.edit', [
             'artist' => $Artist,
